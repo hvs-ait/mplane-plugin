@@ -23,11 +23,11 @@
 #include "ccMPlanePoint.h"
 
 unsigned int ccMPlanePoint::getIndex() const {
-	return m_label->getPoint(0).index;
+	return m_label->getPickedPoint(0).index;
 }
 
 const CCVector3& ccMPlanePoint::getCoordinates() const {
-	return *m_label->getPoint(0).cloud->getPoint(getIndex());
+	return *m_label->getPickedPoint(0).cloudOrVertices()->getPoint(getIndex());
 }
 
 cc2DLabel* ccMPlanePoint::getLabel() {

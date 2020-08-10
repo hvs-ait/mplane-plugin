@@ -83,7 +83,7 @@ cc2DLabel* CC_ITEM_TREE::createPointLabel2D(QString labelText, ccPointCloud *sou
 	ccGenericGLDisplay* display = sourceCloud->getDisplay();
 	if (display) {
 		newLabel = new cc2DLabel();
-		newLabel->addPoint(sourceCloud, pointIdx);
+		newLabel->addPickedPoint(sourceCloud, pointIdx);
 		newLabel->setName(labelText);
 		newLabel->setVisible(true);
 		newLabel->setDisplayedIn2D(false);
