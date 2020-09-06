@@ -20,14 +20,14 @@
 
 // std
 #include <memory>
-#include "ccStdPluginInterface.h"
 
 //CloudCompare
 #include <ccPickingListener.h>
-#include "ccPointCloud.h"
+#include <ccPointCloud.h>
+#include <ccStdPluginInterface.h>
 
 //qMPlane
-#include "ccMPlaneDlgController.h"
+#include "src/ccMPlaneDlgController.h"
 
 #ifdef USE_VLD
 //VLD
@@ -38,7 +38,7 @@
 class qMPlane : public QObject, public ccStdPluginInterface
 {
 	Q_OBJECT
-	Q_INTERFACES(ccStdPluginInterface)
+	Q_INTERFACES( ccPluginInterface ccStdPluginInterface )
 	Q_PLUGIN_METADATA(IID "cccorp.cloudcompare.plugin.MPlane" FILE "info.json")
 	
 public:
