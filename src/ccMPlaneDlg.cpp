@@ -20,9 +20,10 @@
 #include "ccMPlaneDlg.h"
 
 //Qt
-#include <qscrollbar.h>
-#include <qsizepolicy.h>
-#include <qpushbutton.h>
+#include <QScrollBar>
+#include <QSizePolicy>
+#include <QPushbutton>
+#include <QHeaderView>
 
 
 // Sizing of Qt tables inspired by:

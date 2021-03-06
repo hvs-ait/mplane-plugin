@@ -17,15 +17,19 @@
 
 // Qt
 #include <QtGui>
+#include <QTableWidget>
 
 // CC
-#include "qtablewidget.h"
-#include "ccGLWindow.h"
-#include "ccPickingHub.h"
-#include "ccHObject.h"
-#include "DistanceComputationTools.h"
-#include "ccScalarField.h"
-#include "ccPlane.h"
+#include <ccGLWindow.h>
+#include <ccPickingHub.h>
+
+// qCC_db
+#include <ccHObject.h>
+#include <ccScalarField.h>
+#include <ccPlane.h>
+
+// CCCoreLib
+#include <DistanceComputationTools.h>
 
 // Local dependencies
 #include "qMPlane.h"
