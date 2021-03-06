@@ -64,7 +64,7 @@ void qMPlane::onNewSelection( const ccHObject::Container &selectedEntities )
 	m_action->setEnabled(false);
 	if(selectedEntities.size() == 1) {
 		ccHObject *object = selectedEntities.at(0);
-		if (object->getClassID() == CC_TYPES::POINT_CLOUD) {
+		if (object->getClassID() == static_cast<CC_CLASS_ENUM>(CC_TYPES::POINT_CLOUD)) {
 			m_selectedCloud = static_cast<ccPointCloud*>(object);
 			m_action->setEnabled(true);
 		}
