@@ -22,7 +22,7 @@
 //Qt
 #include <QScrollBar>
 #include <QSizePolicy>
-#include <QPushbutton>
+#include <QPushButton>
 #include <QHeaderView>
 
 
