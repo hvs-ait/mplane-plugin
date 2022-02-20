@@ -39,7 +39,7 @@ class ccMPlaneDlg : public ccOverlayDialog, public Ui::MPlaneDialog
 
 public:
 	//! Default constructor
-	explicit ccMPlaneDlg(QWidget* parent = 0);
+	explicit ccMPlaneDlg(QWidget* parent = nullptr);
 
 	// Point Fitting
 	void initializeFittingPointTable();

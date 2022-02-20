@@ -29,7 +29,7 @@
 // Sizing of Qt tables inspired by:
 // https://stackoverflow.com/questions/8766633/how-to-determine-the-correct-size-of-a-qtablewidget
 
-ccMPlaneDlg::ccMPlaneDlg(QWidget* parent/*=0*/)
+ccMPlaneDlg::ccMPlaneDlg(QWidget* parent/*=nullptr*/)
 	: ccOverlayDialog(parent)
 	  , Ui::MPlaneDialog()
 {
