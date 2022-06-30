@@ -305,17 +305,17 @@ void ccMPlaneDlg::initializeFittingPointTable()
 
 void ccMPlaneDlg::onCloseButtonPressed()
 {
-	emit signalCloseButtonPressed();
+	Q_EMIT signalCloseButtonPressed();
 }
 
 void ccMPlaneDlg::onTabChanged(int tab)
 {
-	emit signalTabChanged(tab);
+	Q_EMIT signalTabChanged(tab);
 }
 
 void ccMPlaneDlg::onRadioButtonClicked()
 {
-	emit signalMeasurementModeChanged();
+	Q_EMIT signalMeasurementModeChanged();
 }
 
 void ccMPlaneDlg::onDeleteButtonClicked()
@@ -324,21 +324,21 @@ void ccMPlaneDlg::onDeleteButtonClicked()
 	if (w) {
 		int index = m_pointTableWidget->indexAt(w->pos()).row();
 		m_pointTableWidget->removeRow(index);
-		emit signalFittingPointDelete(index);
+		Q_EMIT signalFittingPointDelete(index);
 	}
 }
 
 void ccMPlaneDlg::onShowNormalCheckBox(bool checked)
 {
-	emit signalShowNormalCheckBoxClicked(m_checkBoxShowNormal->isChecked());
+	Q_EMIT signalShowNormalCheckBoxClicked(m_checkBoxShowNormal->isChecked());
 }
 
 void ccMPlaneDlg::onSaveButtonClicked()
 {
-	emit signalSaveButtonClicked();
+	Q_EMIT signalSaveButtonClicked();
 }
 
 void ccMPlaneDlg::onMeasurementPointNameChanged(QTableWidgetItem *item) {
-	emit signalMeasureNameChanged(item);
+	Q_EMIT signalMeasureNameChanged(item);
 }
 

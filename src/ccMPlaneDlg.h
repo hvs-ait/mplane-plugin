@@ -71,7 +71,7 @@ protected slots:
 	void onShowNormalCheckBox(bool checked);
 	void onSaveButtonClicked();
 
-signals:
+Q_SIGNALS:
 	void signalMeasureNameChanged(QTableWidgetItem *item);
 	void signalCloseButtonPressed();
 	void signalFittingPointClicked(int index);
