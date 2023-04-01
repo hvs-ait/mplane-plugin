@@ -15,9 +15,10 @@
 //#                                                                        #
 //##########################################################################
 
-// CC
-#include "DistanceComputationTools.h"
-#include "ccGLWindow.h"
+// CCCoreLib
+#include <DistanceComputationTools.h>
+// qCC_gl
+#include <ccGLWindowInterface.h>
 
 // Local dependencies
 #include "ccMeasurementDevice.h"

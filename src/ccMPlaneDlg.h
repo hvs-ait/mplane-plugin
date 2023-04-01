@@ -1,3 +1,5 @@
+#pragma once
+
 //##########################################################################
 //#                                                                        #
 //#                    CLOUDCOMPARE PLUGIN: qMPlane                        #
@@ -15,16 +17,12 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef CC_MPLANE_DIALOG_HEADER
-#define CC_MPLANE_DIALOG_HEADER
-
 //Qt
 #include <qtablewidget.h>
 #include <qradiobutton.h>
 #include <qcheckbox.h>
 
 //CC
-#include <ccGLWindow.h>
 #include <ccOverlayDialog.h>
 
 //Local
@@ -97,5 +95,3 @@ private:
 	QRadioButton *m_radioButtonUnsignedMeasurement = nullptr;
 	QCheckBox *m_checkBoxShowNormal = nullptr;
 };
-
-#endif

@@ -20,7 +20,6 @@
 #include <QTableWidget>
 
 // CC
-#include <ccGLWindow.h>
 #include <ccPickingHub.h>
 
 // qCC_db

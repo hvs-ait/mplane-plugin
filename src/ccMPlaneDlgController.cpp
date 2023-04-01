@@ -182,13 +182,13 @@ void ccMPlaneDlgController::startPicking()
 		m_app->dispToConsole("[MPlane] Another tool is already using the picking mechanism. Stop it first", ccMainAppInterface::ERR_CONSOLE_MESSAGE);
 	}
 
-	m_app->getActiveGLWindow()->installEventFilter(this);
+	m_app->getActiveGLWindow()->asQObject()->installEventFilter(this);
 }
 
 void ccMPlaneDlgController::stopPicking()
 {
 	m_app->pickingHub()->removeListener(this);
-	m_app->getActiveGLWindow()->removeEventFilter(this);
+	m_app->getActiveGLWindow()->asQObject()->removeEventFilter(this);
 }
 
 void ccMPlaneDlgController::pickFittingPoint(const ccPickingListener::PickedItem & item)
