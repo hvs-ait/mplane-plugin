@@ -73,9 +73,15 @@ void ccMPlaneDlgController::onNewTab(int tabIndex)
 	m_mode = tabIndex == 0 ? CC_Mode::CC_POINT_SELECTION : CC_Mode::CC_MEASUREMENT;
 }
 
-void ccMPlaneDlgController::onMeasureNameChanged(QTableWidgetItem *item)
+void ccMPlaneDlgController::onMeasureNameChanged(QTableWidgetItem* item)
 {
-	if (!m_data->renameMeasurement(item->text(), item->row())) {
+	if (!item || item->row() < 0)
+	{
+		assert(false);
+		return;
+	}
+	if (!m_data->renameMeasurement(item->text(), item->row()))
+	{
 		m_app->dispToConsole(QString("[MPlane] Measurement point %1 already exists!").arg(item->text()), ccMainAppInterface::ERR_CONSOLE_MESSAGE);
 		m_dialog->renameMeasurement(m_data->getMeasurementPoints()[item->row()].getName(), item->row());
 	}
