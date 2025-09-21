@@ -24,7 +24,7 @@
 // Qt
 #include "qfiledialog.h"
 
-constexpr char *MPLANE_PLANE_NAME = "Fitting-plane";
+constexpr char MPLANE_PLANE_NAME[] = "Fitting-plane";
 
 
 ccMPlaneDlgController::ccMPlaneDlgController(ccMainAppInterface * app) : QObject(), m_app(app)
@@ -123,14 +123,14 @@ void ccMPlaneDlgController::onSaveButtonClicked()
 	QFile file(fileName);
 	if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
 		QTextStream stream(&file);
-		stream << "measurement,x-coord,y-coord,z-coord,distance" << endl;
+		stream << "measurement,x-coord,y-coord,z-coord,distance" << Qt::endl;
 		for (ccMPlanePoint point : m_data->getMeasurementPoints()) {
 			stream
 				<< point.getName() << ","
 				<< point.getCoordinates().x << ","
 				<< point.getCoordinates().y << ","
 				<< point.getCoordinates().z << ","
-				<< point.getDistance() << endl;
+				<< point.getDistance() << Qt::endl;
 		}
 	}
 }
