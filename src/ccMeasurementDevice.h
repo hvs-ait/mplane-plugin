@@ -1,3 +1,5 @@
+#pragma once
+
 //##########################################################################
 //#                                                                        #
 //#                    CLOUDCOMPARE PLUGIN: qMPlane                        #
@@ -14,9 +16,6 @@
 //#         COPYRIGHT: AIT Austrian Institute of Technology GmbH           #
 //#                                                                        #
 //##########################################################################
-
-#ifndef CC_MEASUREMENT_DEVICE
-#define CC_MEASUREMENT_DEVICE
 
 // CC
 #include "ccMainAppInterface.h"
@@ -38,10 +37,8 @@ public:
 	float measurePointToPlaneDistance(const ccPlane *plane, const CCVector3& point, bool signedMeasurement) const;
 
 private:
-	ccMainAppInterface *m_app;
+	ccMainAppInterface* m_app;
 	void setupPlaneUiDisplay(ccPlane *plane, const QString planeName) const;
-	std::tuple<ccScalarField*, int> findOrCreateScalarfieldForCloud(ccPointCloud *cloud) const;
-	void addPointDistancesToScalarfield(ccScalarField *scalarField, const ccPointCloud *cloud, const PointCoordinateType *equation, bool signedMeasurement) const;
+	std::tuple<ccScalarField::Shared, int> findOrCreateScalarfieldForCloud(ccPointCloud *cloud) const;
+	void addPointDistancesToScalarfield(ccScalarField& scalarField, const ccPointCloud *cloud, const PointCoordinateType *equation, bool signedMeasurement) const;
 };
-
-#endif
