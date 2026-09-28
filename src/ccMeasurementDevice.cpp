@@ -24,8 +24,7 @@
 #include "ccMeasurementDevice.h"
 #include "ccMPlaneErrors.h"
 
-constexpr char * MPLANE_SCALARFIELD_NAME = "MPlane Distance";
-
+constexpr char MPLANE_SCALARFIELD_NAME[] = "MPlane Distance";
 
 ccPlane* ccMeasurementDevice::fitPlaneToPoints(const std::vector<ccMPlanePoint>& fittingPoints, const QString& planeName) const
 {
@@ -41,26 +40,35 @@ ccPlane* ccMeasurementDevice::fitPlaneToPoints(const std::vector<ccMPlanePoint>&
 
 	ccPlane *plane = ccPlane::Fit(&planeCloud);
 
-	if (plane) {
+	if (plane)
+	{
 		setupPlaneUiDisplay(plane, planeName);
 		return plane;
 	}
-	else {
+	else
+	{
 		throw MplaneFittingError("Could not fit plane");
 	}
 }
 void ccMeasurementDevice::createScalarFieldForCloud(const ccPlane *plane, ccPointCloud *cloud, bool signedMeasurement) const
 {
 	CCVector3 N = plane->getNormal();
-	PointCoordinateType equation[4] = { N.x, N.y, N.z, 0 };
+	PointCoordinateType equation[4] { N.x, N.y, N.z, 0 };
 	plane->getEquation(N, equation[3]);
 
-	ccScalarField *scalarFieldPlane;
+	ccScalarField::Shared scalarFieldPlane;
 	int scalarIndex;
 	std::tie(scalarFieldPlane, scalarIndex) = findOrCreateScalarfieldForCloud(cloud);
-	scalarFieldPlane->clear();
 
-	addPointDistancesToScalarfield(scalarFieldPlane, cloud, equation, signedMeasurement);
+	if (scalarFieldPlane)
+	{
+		scalarFieldPlane->clear();
+		addPointDistancesToScalarfield(*scalarFieldPlane, cloud, equation, signedMeasurement);
+	}
+	else
+	{
+		assert(false);
+	}
 
 	scalarFieldPlane->computeMinAndMax();
 	cloud->setCurrentDisplayedScalarField(scalarIndex);
@@ -106,31 +114,40 @@ void ccMeasurementDevice::setupPlaneUiDisplay(ccPlane * plane, const QString pla
 	plane->setSelectionBehavior(ccHObject::SELECTION_IGNORED);
 }
 
-std::tuple<ccScalarField*, int> ccMeasurementDevice::findOrCreateScalarfieldForCloud(ccPointCloud *cloud) const
+std::tuple<ccScalarField::Shared, int> ccMeasurementDevice::findOrCreateScalarfieldForCloud(ccPointCloud *cloud) const
 {
-	ccScalarField *scalarFieldPlane = nullptr;
+	ccScalarField::Shared scalarFieldPlane;
 
 	int scalarIndex = cloud->getScalarFieldIndexByName(MPLANE_SCALARFIELD_NAME);
-	if (scalarIndex == -1) {
-		scalarFieldPlane = new ccScalarField(MPLANE_SCALARFIELD_NAME);
+	if (scalarIndex == -1)
+	{
+		scalarFieldPlane.reset(new ccScalarField(MPLANE_SCALARFIELD_NAME));
 		scalarFieldPlane->reserve(cloud->size());
 		scalarIndex = cloud->addScalarField(scalarFieldPlane);
 	}
-	else {
-		scalarFieldPlane = static_cast<ccScalarField*>(cloud->getScalarField(scalarIndex));
+	else
+	{
+		scalarFieldPlane = cloud->getCCScalarField(scalarIndex);
 	}
 	return std::make_tuple(scalarFieldPlane, scalarIndex);
 }
 
-void ccMeasurementDevice::addPointDistancesToScalarfield(ccScalarField *scalarField, const ccPointCloud *cloud, const PointCoordinateType * equation, bool signedMeasurement) const
+void ccMeasurementDevice::addPointDistancesToScalarfield(ccScalarField& scalarField, const ccPointCloud* cloud, const PointCoordinateType* equation, bool signedMeasurement) const
 {
-	for (unsigned int i = 0; i < cloud->size(); ++i) {
-		const CCVector3 *P = cloud->getPoint(i);
-		if (signedMeasurement) {
-			scalarField->addElement(CCCoreLib::DistanceComputationTools::computePoint2PlaneDistance(P, equation));
+	if (signedMeasurement)
+	{
+		for (unsigned int i = 0; i < cloud->size(); ++i)
+		{
+			const CCVector3* P = cloud->getPoint(i);
+			scalarField.addElement(CCCoreLib::DistanceComputationTools::computePoint2PlaneDistance(P, equation));
 		}
-		else {
-			scalarField->addElement(abs(CCCoreLib::DistanceComputationTools::computePoint2PlaneDistance(P, equation)));
+	}
+	else
+	{
+		for (unsigned int i = 0; i < cloud->size(); ++i)
+		{
+			const CCVector3* P = cloud->getPoint(i);
+			scalarField.addElement(std::abs(CCCoreLib::DistanceComputationTools::computePoint2PlaneDistance(P, equation)));
 		}
 	}
 }

@@ -117,7 +117,6 @@ void ccMPlaneDlg::createMeasurementTab()
 	QWidget *savingWidget = new QWidget();
 	QHBoxLayout *hLayout = new QHBoxLayout();
 	hLayout->setSpacing(0);
-	hLayout->setMargin(0);
 	hLayout->setContentsMargins(0, 0, 0, 0);
 
 	QPushButton *buttonSaving = new QPushButton("Save");
