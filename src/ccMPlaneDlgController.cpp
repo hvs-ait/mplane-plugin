@@ -19,10 +19,14 @@
 #include "ccMPlaneDlgController.h"
 
 // CC
+#include "ccFileUtils.h"
+#include "ccPersistentSettings.h"
 #include "ccPickingHub.h"
 
 // Qt
 #include "qfiledialog.h"
+#include "qfileinfo.h"
+#include "qsettings.h"
 
 constexpr char MPLANE_PLANE_NAME[] = "Fitting-plane";
 
@@ -117,9 +121,19 @@ void ccMPlaneDlgController::onNormalCheckBoxClicked(bool checked)
 
 void ccMPlaneDlgController::onSaveButtonClicked()
 {
+	// start in the last saving location
+	QSettings settings;
+	settings.beginGroup(ccPS::SaveFile());
+	QString currentPath = settings.value(ccPS::CurrentPath(), ccFileUtils::defaultDocPath()).toString();
 	QString fileName = QFileDialog::getSaveFileName(m_dialog,
-		tr("Save Measurements"), "",
+		tr("Save Measurements"), currentPath,
 		tr("Comma-separated values (*.csv);;All Files (*)"));
+	if (fileName.isEmpty()) {
+		return;
+	}
+	settings.setValue(ccPS::CurrentPath(), QFileInfo(fileName).absolutePath());
+	settings.endGroup();
+
 	QFile file(fileName);
 	if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
 		QTextStream stream(&file);
